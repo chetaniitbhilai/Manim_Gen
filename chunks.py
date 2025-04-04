@@ -24,5 +24,5 @@ def split_video(video_path, chunk_length=300):  # 300 seconds = 5 minutes
     print(f"Video split into 5-minute chunks in '{output_dir}' directory.")
 
 # Example usage
-video_file = "videoplayback.mp4"  # Replace with your video file
+video_file = "./videos/videoplayback.mp4"  # Replace with your video file
 split_video(video_file)

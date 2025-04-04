@@ -18,7 +18,7 @@ def process_video(video_url, upload_id):
         output_path = os.path.abspath(os.path.join(PROCESSED_FOLDER, f'{upload_id}.mp4'))
         
         process = subprocess.Popen(
-            [sys.executable, 'script-code.py', video_url],
+            [sys.executable, 'run.py', video_url],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
