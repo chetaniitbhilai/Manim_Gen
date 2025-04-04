@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Processed Video</title>
+    <style>
+        .container { max-width: 800px; margin: 50px auto; text-align: center; }
+        video { width: 100%; border-radius: 10px; margin-top: 20px; }
+        a { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 5px; }
+        a:hover { background: #218838; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Processing Complete</h1>
+        <video controls>
+            <source src="/download/{{ video_id }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <br>
+        <a href="/download/{{ video_id }}" download>Download Processed Video</a>
+    </div>
+</body>
+</html>

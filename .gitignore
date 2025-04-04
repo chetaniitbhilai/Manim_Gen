@@ -1,0 +1,11 @@
+__pycache__
+manim_flask
+.bash_history
+media
+manim_generated
+sample_video
+non_usable_code
+script_voice
+.pdf
+.aux
+.log

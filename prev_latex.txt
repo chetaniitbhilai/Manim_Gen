@@ -1,0 +1,14 @@
+ Thus we have proved that
+every point of \( X \) is in \( 0, 2 \) or \( 4 \) of the sets
+\( A, B, C, D \) implies statement \((a)\).
+Similar statement holds for \((b)\).
+Hence \((a) \Leftrightarrow (b) \)
+6. Let \( E_n = (0, 1 - \frac{1}{n}] \) if \( n \) is odd
+\(= [\frac{1}{n}, 1) \) if \( n \) is even.
+Then \( E_{*} = (0, 1) \)
+7. Let \(\{ D_n \}\) be a sequence of sets defined by
+\( D_1 = E_1, D_2 = D_1 \Delta E_2, .... \)
+\( D_n = D_{n-1} \Delta E_n \)
+\(n = 2, 3, ..... \)
+Show that \(\{ D_n \}\) converges if and only if
+limit of the sequence \( E_n = \phi \).

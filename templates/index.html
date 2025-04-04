@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Processor</title>
+    <style>
+        .container { max-width: 800px; margin: 50px auto; text-align: center; }
+        .chatbox { border: 2px solid #ccc; padding: 20px; border-radius: 10px; background: #f9f9f9; display: flex; align-items: center; }
+        input[type="url"] { flex-grow: 1; padding: 10px; border: none; border-radius: 5px; outline: none; }
+        button { background: #007bff; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; margin-left: 10px; }
+        button:hover { background: #0056b3; }
+        #status { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lecture Video Processor</h1>
+        <div class="chatbox">
+            <input type="url" id="video_url" placeholder="Enter video URL..." required>
+            <button onclick="sendVideo()">➤</button>
+        </div>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        function checkProcessing(uploadId) {
+            const interval = setInterval(() => {
+                fetch('/check_status')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'complete') {
+                        clearInterval(interval);
+                        window.location.href = "/result"; // Redirect to result page
+                    }
+                });
+            }, 10000);
+        }
+
+        function sendVideo() {
+            const videoUrl = document.getElementById("video_url").value;
+            if (!videoUrl) {
+                alert("Please enter a valid video URL.");
+                return;
+            }
+
+            fetch('/process', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ video_url: videoUrl })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.upload_id) {
+                    document.getElementById("status").innerText = "Processing started...";
+                    checkProcessing(data.upload_id);
+                } else {
+                    document.getElementById("status").innerText = "Error: " + data.error;
+                }
+            })
+            .catch(error => {
+                document.getElementById("status").innerText = "Request failed.";
+            });
+        }
+    </script>
+</body>
+</html>
