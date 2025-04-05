@@ -95,8 +95,8 @@ def generate_and_check_latex(data, output_dir="latex_files", cleanup=True, max_r
                 print(f"Failed after {max_retries} retries. Removing {filename} from dataset.")
                 element["compilation_status"][line_idx] = False
                 element["compilation_errors"][line_idx] = error_message
-                element["content"][line_idx] = [""]  # Mark for removal
-                element["speak"][line_idx] = [""]
+                element["content"][line_idx] = ""  # Mark for removal
+                element["speak"][line_idx] = ""
 
     # Remove elements that couldn't be fixed
     for element in data["elements"]:

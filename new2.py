@@ -120,6 +120,37 @@ from manim import *  # Ensure manim is installed
 
 def generate_manim_code(title, elements=None):
     # Static data for Empty Index Sets
+    if elements is None:
+        elements = [
+            {
+                'type': 'tex',
+                'content': ['If the index set I is empty, we define:',
+                            '$\\bigcup_{i \\in I} E_i = \\phi$',
+                            '$\\bigcap_{i \\in I} E_i = \\Omega$'],
+                'speak': ['If the index set I is empty, we define the union of E sub i over all i in I to be the empty set, and the intersection of E sub i over all i in I to be Omega.']
+            },
+            {
+                'type': 'tex',
+                'content': ['Unions become larger with more sets, intersections become smaller.'],
+                'speak': ['Unions become larger with the inclusion of more sets, whereas intersections become smaller.']
+            },
+            {
+                'type': 'tex',
+                'content': ['If $I_1 \\subset I_2$ (nonempty), then $\\bigcap_{i \\in I_1} E_i \\supseteq \\bigcap_{i \\in I_2} E_i$.'],
+                'speak': ['If I one is a subset of I two, and both are nonempty, then the intersection of E sub i over all i in I one contains the intersection of E sub i over all i in I two.']
+            },
+            {
+                'type': 'tex',
+                'content': ['$\\phi$ leads to the largest intersection: $\\Omega$.'],
+                'speak': ['Therefore, the empty set should lead to the largest intersection, which is Omega.']
+            },
+            {
+                'type': 'tex',
+                'content': ["Consistent with De Morgan's laws."],
+                'speak': ["This convention is also consistent with De Morgan's laws."]
+            }
+        ]
+
     code = f"""
 from manim import *
 from manim_voiceover import VoiceoverScene
