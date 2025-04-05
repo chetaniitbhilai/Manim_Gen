@@ -1,23 +1,33 @@
 import subprocess
 import sys
+import os
 
 if len(sys.argv) != 2:
-    print("Usage: python run_all.py <YouTube_URL>")
+    print("Usage: python run.py <YouTube_URL>")
     sys.exit(1)
 
-video_url = sys.argv[1]  # Get YouTube link from command line
+video_url = sys.argv[1]
 
-# Step 1: Run the YouTube downloader script with the URL
-print("Downloading YouTube video...")
-subprocess.run(["python", "yt_video_downloader.py", video_url], check=True)
-print("Download complete.\n")
+def run_command(command, description):
+    """ Run a subprocess and log any errors """
+    try:
+        print(f"\n[INFO] {description}...")
+        result = subprocess.run(command, check=True, text=True, capture_output=True)
+        print(result.stdout)
+    except subprocess.CalledProcessError as e:
+        print(f"[ERROR] {description} failed: {e.stderr}")
+        sys.exit(1)
 
-# Step 2: Run the video chunking script
-print("Chunking the video...")
-subprocess.run(["python", "chunks.py"], check=True)
-print("Chunking complete.\n")
+# Step 1: Clean previous data
+run_command(["python3", "clean.py"], "Cleaning previous files")
 
-# Step 3: Run the final script
-print("Running final script...")
-subprocess.run(["python", "run_script.py"], check=True)
-print("All scripts executed successfully.")
+# Step 2: Download YouTube video
+run_command(["python3", "yt_video_downloader.py", video_url], "Downloading YouTube video")
+
+# Step 3: Chunk the video
+run_command(["python3", "chunks.py"], "Chunking the video")
+
+# Step 4: Run final processing script
+run_command(["python3", "run_script.py"], "Running final processing")
+
+print("\n✅ All scripts executed successfully.")

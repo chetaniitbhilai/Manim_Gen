@@ -1,23 +1,19 @@
+<!-- templates/result.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Processed Video</title>
-    <style>
-        .container { max-width: 800px; margin: 50px auto; text-align: center; }
-        video { width: 100%; border-radius: 10px; margin-top: 20px; }
-        a { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 5px; }
-        a:hover { background: #218838; }
-    </style>
+    <meta charset="UTF-8">
+    <title>Video Ready!</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Processing Complete</h1>
-        <video controls>
-            <source src="/download/{{ video_id }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <br>
-        <a href="/download/{{ video_id }}" download>Download Processed Video</a>
-    </div>
+    <h1>🎉 Processing Complete!</h1>
+    <video width="640" height="360" controls>
+        <source src="{{ url_for('static', filename=video_id + '.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <br><br>
+    <a href="{{ url_for('download', video_id=video_id) }}" download>
+        <button>Download Merged Video</button>
+    </a>
 </body>
 </html>

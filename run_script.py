@@ -1,77 +1,42 @@
-# import os
-# import subprocess
-# import shutil
-
-# # Step 1: Run new.py to generate chunks
-# # subprocess.run(["python3", "new.py", "input_  file.txt"])
-
-# # Step 2: Define directories
-# chunks_dir = "chunks"
-# output_base_dir = "manim_generated"
-# manim_video_path = "/home/chetan/Documents/gdg_sol/new/Google_hack2skill/manim_flask/media/videos/generated_scene/480p15/GeneratedScene.mp4"
-
-# # Ensure the output base directory exists
-# os.makedirs(output_base_dir, exist_ok=True)
-
-# # Step 3: Process each chunk with new2.py
-# if os.path.exists(chunks_dir):
-#     for i, chunk in enumerate(sorted(os.listdir(chunks_dir)), start=0):
-#         chunk_path = os.path.join(chunks_dir, chunk)
-        
-#         # Run new2.py on the chunk
-#         subprocess.run(["python3", "new2.py", chunk_path])
-
-#         # Define the output directory for this chunk
-#         chunk_output_dir = os.path.join(output_base_dir, f"chunk_{i}")
-#         os.makedirs(chunk_output_dir, exist_ok=True)
-
-#         # Copy the generated Manim video to the chunk directory
-#         if os.path.exists(manim_video_path):
-#             shutil.copy(manim_video_path, os.path.join(chunk_output_dir, "GeneratedScene.mp4"))
-#         else:
-#             print(f"Warning: Manim video not found for {chunk_path}")
-
-# else:
-#     print(f"Error: Directory '{chunks_dir}' not found. Ensure new.py ran successfully.")
-
-import os
-import subprocess
-import shutil
+# run_script.py
 import time
+import os
+import shutil
 
-# Step 1: Define directories
-chunks_dir = "chunks"
-output_base_dir = "manim_generated"
-manim_video_path = "/home/chetan/Documents/gdg_sol/new/Google_hack2skill/manim_flask/media/videos/generated_scene/480p15/GeneratedScene.mp4"
+CHUNKS_DIR = 'chunks'
+OUTPUT_DIR = 'static'
+PROGRESS_FILE = 'progress.txt'
+MERGED_FILE = os.path.join(OUTPUT_DIR, 'merged_output.mp4')
 
-# Ensure the output base directory exists
-os.makedirs(output_base_dir, exist_ok=True)
+def simulate_processing(chunk_num):
+    print(f"Processing chunk {chunk_num}...")
+    time.sleep(2)  # Simulate time taken for chunk processing
 
-# Step 2: Process each chunk with new2.py
-if os.path.exists(chunks_dir):
-    for i, chunk in enumerate(sorted(os.listdir(chunks_dir)), start=0):
-        chunk_path = os.path.join(chunks_dir, chunk)
-        
-        # Try running new2.py once, and retry if it fails
-        attempt = 0
-        max_attempts = 2
-        while attempt < max_attempts:
-            result = subprocess.run(["python3", "new2.py", chunk_path])
-            if result.returncode == 0:
-                break  # Exit loop if success
-            attempt += 1
-            print(f"Retrying ({attempt}/{max_attempts}) for {chunk_path}...")
-            time.sleep(2)  # Small delay before retry
-        
-        # Define the output directory for this chunk
-        chunk_output_dir = os.path.join(output_base_dir, f"chunk_{i}")
-        os.makedirs(chunk_output_dir, exist_ok=True)
+def merge_chunks(total_chunks):
+    print("Merging chunks...")
+    time.sleep(2)  # Simulate merging time
+    with open(MERGED_FILE, 'wb') as merged:
+        for i in range(total_chunks):
+            fake_chunk = f"Chunk-{i+1}\n".encode()
+            merged.write(fake_chunk)
 
-        # Move the generated Manim video to the chunk directory
-        if os.path.exists(manim_video_path):
-            shutil.move(manim_video_path, os.path.join(chunk_output_dir, "GeneratedScene.mp4"))
-        else:
-            print(f"Warning: Manim video not found for {chunk_path}")
+def main():
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-else:
-    print(f"Error: Directory '{chunks_dir}' not found. Ensure new.py ran successfully.")
+    total_chunks = 0
+    if os.path.exists(CHUNKS_DIR):
+        total_chunks = len([f for f in os.listdir(CHUNKS_DIR) if f.endswith('.mp4')])
+    if total_chunks == 0:
+        total_chunks = 5  # fallback for simulation
+
+    for i in range(total_chunks):
+        simulate_processing(i + 1)
+        with open(PROGRESS_FILE, 'w') as f:
+            f.write(f"{i+1}/{total_chunks}")
+
+    merge_chunks(total_chunks)
+    with open(PROGRESS_FILE, 'w') as f:
+        f.write("done")
+
+if __name__ == "__main__":
+    main()
