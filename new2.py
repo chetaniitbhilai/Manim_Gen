@@ -22,7 +22,13 @@ import re
 import subprocess
 from check import process_latex_data
 from repeated import check_repeated_content
+from dotenv import load_dotenv
+import os
 
+
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
 
 import numpy as np
 from manim import *  # Ensure manim is installed
@@ -298,7 +304,7 @@ import google.generativeai as genai
 # from google import genai
 
 # Configure the API key (there's no Client class in the new version)
-API_KEY = "AIzaSyDF1XCJo8Ko6RP6TNgxDGJSDYuydAqw9Ow"
+
 genai.configure(api_key=API_KEY)
 
 # Import file functions; the current version uses upload_file.

@@ -10,9 +10,13 @@ def download_video(video_url):
         output_path = os.path.join(output_folder, "videoplayback.mp4")  # Fixed filename
         
         ydl_opts = {
-            'format': 'bestvideo+bestaudio/best',  
-            'outtmpl': output_path,  # Save as 'videoplayback.mp4'
-            'merge_output_format': 'mp4',  # Ensure the output is in MP4 format
+            'format': 'bestvideo+bestaudio/best',
+            'outtmpl': output_path,
+            'merge_output_format': 'mp4',
+            'cookiefile': 'cookies.txt',
+            'headers': {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
+            }
         }
         
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:

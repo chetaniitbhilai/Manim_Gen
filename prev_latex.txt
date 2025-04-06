@@ -1,53 +1,44 @@
 
-        {\tiny OCET IIT KGP}
-        Algebra of Sets
-        Sets, Classes, Collections
+Algebra of Sets
+Sets, Classes, Collections
+\(\Omega \longrightarrow \) Space or universal set
+\(\phi \longrightarrow \) Empty set, Class \(\longrightarrow\) set of sets
+Collection \(\longrightarrow \) set of Classes
+Example: Let \(\Omega\) be the real line \(\mathbb{R}\) and let
+\(\mathcal{C}_a = \{(a,b) : b>a\}\) for \(a\in \mathbb{R}\)
+Then \(\mathcal{C}_a\) is a class of sets for each \(a\).
+Further \(\mathcal{E}_b = \{ \mathcal{C}_a: a \in \mathbb{R} \}\) is a collection.
 
-        \(\Omega \) \(\rightarrow \) space or universal set
-        \(\phi \) \(\rightarrow \) empty set, Class \(\rightarrow \) set of sets
-        Collection \(\rightarrow \) set of classes
-        Example: Let \(\Omega \) be the real line \(R\) and let
-        \(C_a = \{ (a,b): b > a\} \) for \(a \in R\)
-        Then \(C_a\) is a class of sets for each \(a\).
-        Further \(\varepsilon_c = \{ C_a : a \in R \} \) is a collection.
-        For any two sets \(A,B \subset \Omega \), consider the relation
-        \( 'A R B' \) if \(A \subset B\). Then the relation 'R' is 
-        reflexive and transitive. It is symmetric of \(\Omega = \phi\).
+For any two sets \(A,B \subset \Omega\), consider the relation
+'\(A R B\)' if \( A\subset B\). Then the relation '\(R\)' is
+reflexive and transitive. It is symmetric iff \(\Omega = \phi\).
 
-    
-        {\tiny OCET IIT KGP}
-        If the index set \(I \) is empty we make the 
-        convention that \(\bigcup_{i \in I} E_i = \phi \) and \(\bigcap_{i \in I} E_i = \Omega \).
+If the index set \(I\) is empty we make the convention that
 
-        The main reason for this rather surprising 
-        convention is that the unions become larger 
-        with inclusion of more sets, whereas the intersections
-        become smaller. For example, if \(I_1 \) and \(I_2 \)
-        are two nonempty index sets, \(I_1 \subset I_2\) then
+\(\bigcup_{i\in I} E_i = \phi \) and \(\bigcap_{i\in I} E_i = \Omega\)
 
-        \(\bigcap_{i \in I_1} E_i \supseteq \bigcap_{i \in I_2} E_i \)
+The main reason for this rather surprising convention is that the unions become larger with inclusion of more sets, whereas the intersections become smaller. For example, if \(I_1\) and \(I_2\) are two nonempty index sets, \(I_1 \subset I_2\) then
 
-        Hence the smallest possible index set, i.e., \(\phi \) should
-        lead to the largest intersection, i.e., \(\Omega \).
+\(\bigcap_{i\in I_1} E_i \supset \bigcap_{i\in I_2} E_i\)
 
-        This convention is also consistent with De-Morgan's
-        laws.
-    
-        {\tiny OCET IIT KGP}
-        Indicator Function or Characteristic Function
+Hence the smallest possible index set, i.e., \(\phi\) should lead to the largest intersection, i.e., \(\Omega\).
 
-        \(\chi_E(x) = 1 \), if \(x \in E\)
-        \(\qquad = 0\), if \(x \notin E\)
+This convention is also consistent with De-Morgan's laws.
 
-        We have \(E = \{x: \chi_E(x) = 1 \} \).
-        Clearly
-        \(\chi_{\phi}(x) = 0 \) for all \(x \in \Omega \) and
-        \(\chi_{\Omega}(x) = 1 \) if \(x \in \Omega\).
+Indicator Function or Characteristic Function
 
-        Exercises:
-        1. If \( A \subset B\), then \(\chi_A(x) \leq \chi_B(x) \)
-         for all \( x \in \Omega\). Conversely if
-         \(\chi_A(x) \leq \chi_B(x) \) \(\forall \) \(x \in \Omega\), then \(A \subset B\)
+\(\chi_E(x) = 1 \), if \( x \in E \)
+\(\chi_E(x) = 0 \), if \( x \notin E \)
+We have \(E = \{ x: \chi_E(x) = 1\}\)
+Clearly
+\(\chi_\phi(x) = 0 \) for all \(x\in \Omega\) and
+\(\chi_\Omega(x) = 1 \) if \(x\in \Omega\).
 
-         2. \(\chi_{E \cap F}(x) = \chi_E(x) \chi_F(x) = min \{ \chi_E(x), \chi_F(x) \} \)
-    
+Exercises:
+
+1. If \( A \subset B \), then \(\chi_A(x) \leq \chi_B(x)\)
+for all \( x\in \Omega\). Conversely if
+\(\chi_A(x) \leq \chi_B(x)\) \(\forall\) \( x \in \Omega\), then \(A \subset B\).
+
+2. \(\chi_{E \cap F}(x) = \chi_E(x) \chi_F(x) = \min \{ \chi_E(x), \chi_F(x) \}\)
+

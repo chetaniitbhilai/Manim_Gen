@@ -1,7 +1,15 @@
 import google.generativeai as genai
 
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
+
 # Initialize Gemini API (Replace with your actual API key)
-genai.configure(api_key="AIzaSyDF1XCJo8Ko6RP6TNgxDGJSDYuydAqw9Ow")
+genai.configure(api_key=API_KEY)
 
 def get_fixed_latex(latex_snippet, error_message):
     """
