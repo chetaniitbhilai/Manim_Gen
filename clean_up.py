@@ -5,7 +5,7 @@ import shutil
 file_extensions = ['.pdf', '.aux', '.log']
 
 # Directory names to delete
-dirs_to_delete = ['videos', 'chunks']
+dirs_to_delete = ['videos', 'chunks', '__pycache__']
 
 def delete_files_with_extensions(extensions):
     for file in os.listdir('.'):
