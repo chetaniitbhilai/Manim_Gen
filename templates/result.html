@@ -1,23 +1,190 @@
-<!DOCTYPE html>
-<html>
+<!-- <!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Processed Video</title>
+    <meta charset="UTF-8">
+    <title>Transformative Video Ready!</title>
     <style>
-        .container { max-width: 800px; margin: 50px auto; text-align: center; }
-        video { width: 100%; border-radius: 10px; margin-top: 20px; }
-        a { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 5px; }
-        a:hover { background: #218838; }
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #3498db;
+            text-align: center;
+        }
+        .video-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .download-btn {
+            display: block;
+            width: 250px;
+            margin: 20px auto;
+            padding: 12px 24px;
+            background-color: #27ae60;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .download-btn:hover {
+            background-color: #219653;
+        }
+        .code-container {
+            margin-top: 30px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 15px;
+        }
+        .code-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        pre {
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 16px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Processing Complete</h1>
-        <video controls>
+    <h1>🎉 Processing Complete!</h1>
+    
+    <div class="video-container">
+        <video width="720" height="405" controls>
             <source src="/download/{{ video_id }}" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <br>
-        <a href="/download/{{ video_id }}" download>Download Processed Video</a>
     </div>
+    
+    <a href="{{ url_for('download', video_id=video_id) }}" class="download-btn" download>
+        Download Transformed Video
+    </a>
+    
+    
+    <a href="/" class="back-btn">Process Another Video</a>
+    
+    <script>
+        // If no manim code was provided in the template, fetch it
+        window.onload = function() {
+            const manimCodeBlock = document.getElementById('manim-code');
+            if (!manimCodeBlock.textContent.trim()) {
+                fetch('/get_manim_code/{{ video_id }}')
+                    .then(response => response.json())
+                    .then(data => {
+                        manimCodeBlock.textContent = data.manim_code;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching manim code:', error);
+                        manimCodeBlock.textContent = 'Error loading Manim code.';
+                    });
+            }
+        };
+    </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transformative Video Ready!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #3498db;
+            text-align: center;
+        }
+        .video-container {
+            display: flex;
+            margin: 20px 0;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .download-btn {
+            display: block;
+            width: 250px;
+            margin: 20px auto;
+            padding: 12px 24px;
+            background-color: #27ae60;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .download-btn:hover {
+            background-color: #219653;
+        }
+        .code-container {
+            margin-top: 30px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 15px;
+        }
+        .code-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        pre {
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 16px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎉 Processing Complete!</h1>
+    
+    <div class="video-container">
+        <video width="1080" height="720" controls>
+            <source src="/download/{{ video_id }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    
+    <a href="{{ url_for('download', video_id=video_id) }}" class="download-btn" download>
+        Download Transformed Video
+    </a>
+    
+    
+    <a href="/" class="back-btn">Process Another Video</a>
+    
 </body>
 </html>

@@ -120,36 +120,6 @@ from manim import *  # Ensure manim is installed
 
 def generate_manim_code(title, elements=None):
     # Static data for Empty Index Sets
-    if elements is None:
-        elements = [
-            {
-                'type': 'tex',
-                'content': ['If the index set I is empty, we define:',
-                            '$\\bigcup_{i \\in I} E_i = \\phi$',
-                            '$\\bigcap_{i \\in I} E_i = \\Omega$'],
-                'speak': ['If the index set I is empty, we define the union of E sub i over all i in I to be the empty set, and the intersection of E sub i over all i in I to be Omega.']
-            },
-            {
-                'type': 'tex',
-                'content': ['Unions become larger with more sets, intersections become smaller.'],
-                'speak': ['Unions become larger with the inclusion of more sets, whereas intersections become smaller.']
-            },
-            {
-                'type': 'tex',
-                'content': ['If $I_1 \\subset I_2$ (nonempty), then $\\bigcap_{i \\in I_1} E_i \\supseteq \\bigcap_{i \\in I_2} E_i$.'],
-                'speak': ['If I one is a subset of I two, and both are nonempty, then the intersection of E sub i over all i in I one contains the intersection of E sub i over all i in I two.']
-            },
-            {
-                'type': 'tex',
-                'content': ['$\\phi$ leads to the largest intersection: $\\Omega$.'],
-                'speak': ['Therefore, the empty set should lead to the largest intersection, which is Omega.']
-            },
-            {
-                'type': 'tex',
-                'content': ["Consistent with De Morgan's laws."],
-                'speak': ["This convention is also consistent with De Morgan's laws."]
-            }
-        ]
 
     code = f"""
 from manim import *
@@ -172,6 +142,8 @@ class GeneratedScene(VoiceoverScene, MovingCameraScene):
         content_lines = elem['content']
         speech_text = elem['speak']
         content_args = ", ".join([f'r"{line}"' for line in content_lines])
+        if(content_args is None):
+            content_args = ""
         class_name = "Tex" if elem_type == "tex" else "MathTex"
         font_size = 40 if elem_type == 'tex' and idx < 2 else 36
 
@@ -326,7 +298,7 @@ import google.generativeai as genai
 # from google import genai
 
 # Configure the API key (there's no Client class in the new version)
-API_KEY = "AIzaSyDNQ3uLiUTQVljD8Cj5vAAB1HLnk2FQnU4"
+API_KEY = "AIzaSyDF1XCJo8Ko6RP6TNgxDGJSDYuydAqw9Ow"
 genai.configure(api_key=API_KEY)
 
 # Import file functions; the current version uses upload_file.
@@ -464,11 +436,11 @@ def main():
     transcription_text_temp = transcribe_video(video_file, prev_latex_content)
     
 
-    transcription_text = check_repeated_content(transcription_text_temp)
+    # transcription_text = check_repeated_content(transcription_text_temp)
     
-    print("This is the non repeating transcription text\n\n\n\n\n" ,transcription_text, "\n\n\n\n\n\n")
+    print("This is the non repeating transcription text\n\n\n\n\n" ,transcription_text_temp, "\n\n\n\n\n\n")
     # Extract slide content from transcription
-    slides = extract_slide_content(transcription_text)
+    slides = extract_slide_content(transcription_text_temp)
     print("Extracted slides:", slides)
     if len(slides) == 0:
         print("No slides extracted. Exiting.")
@@ -512,9 +484,9 @@ def main():
     # Uncomment the following lines to render the scene:
     import subprocess
     import shutil
-    subprocess.run(["python3", "-m", "manim", "-ql", "generated_scene.py", "GeneratedScene"], check=True)
+    subprocess.run(["python3", "-m", "manim", "-qh", "generated_scene.py", "GeneratedScene"], check=True)
     # After rendering the Manim scene
-    manim_output_dir = os.path.join("media", "videos", "generated_scene", "480p15")
+    manim_output_dir = os.path.join("media", "videos", "generated_scene", "1080p60")
     generated_video_path = os.path.join(manim_output_dir, "GeneratedScene.mp4")
     destination_path = os.path.join("media", "videos", "GeneratedScene.mp4")
 

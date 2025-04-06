@@ -1,0 +1,2 @@
+file 'manim_generated/chunk_0/GeneratedScene.mp4'
+file 'manim_generated/chunk_1/GeneratedScene.mp4'

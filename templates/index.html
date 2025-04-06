@@ -1,7 +1,206 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Video Processor</title>
+    <title>Lecture Video Processor</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 18px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 60px auto;
+            text-align: center;
+        }
+
+        .chatbox {
+            border: 2px solid #ccc;
+            padding: 25px;
+            border-radius: 12px;
+            background: #f1f1f1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        input[type="url"] {
+            flex-grow: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            outline: none;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #status {
+            margin-top: 30px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .sample-links {
+            margin-top: 40px;
+        }
+
+        .sample-links button {
+            background-color: #6c757d;
+            margin: 10px;
+            padding: 14px 20px;
+            border-radius: 6px;
+            font-size: 18px;
+        }
+
+        .sample-links button:hover {
+            background-color: #5a6268;
+        }
+
+        .sample-videos {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .sample-video-wrapper {
+            margin: 20px;
+            text-align: center;
+        }
+
+        .sample-videos video {
+            width: 320px;
+            height: 200px;
+            border-radius: 12px;
+        }
+
+        .sample-caption {
+            font-size: 18px;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lecture Video Processor</h1>
+
+        <div class="chatbox">
+            <input type="url" id="video_url" placeholder="Enter video URL..." required>
+            <button onclick="sendVideo()">➤ Process</button>
+        </div>
+
+        <div class="sample-links">
+            <p>Try with sample videos:</p>
+            <button onclick="submitSample('/static/videos/sample1.mp4')">Sample 1</button>
+            <button onclick="submitSample('/static/videos/sample2.mp4')">Sample 2</button>
+            <button onclick="submitSample('/static/videos/sample3.mp4')">Sample 3</button>
+        </div>
+
+        <!-- Local Video Previews -->
+        <div class="sample-videos">
+            <div class="sample-video-wrapper">
+                <div class="sample-caption">Sample 1 Preview</div>
+                <video controls>
+                    <source src="../samples/sample1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="sample-video-wrapper">
+                <div class="sample-caption">Sample 2 Preview</div>
+                <video controls>
+                    <source src="/static/videos/sample2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="sample-video-wrapper">
+                <div class="sample-caption">Sample 3 Preview</div>
+                <video controls>
+                    <source src="/static/videos/sample3.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+        <div id="status"></div>
+        <button id="resetButton" class="hidden" onclick="resetProcessing()">Generate Other Video</button>
+    </div>
+
+    <script>
+        function sendVideo() {
+            const videoUrl = document.getElementById("video_url").value;
+            const statusDiv = document.getElementById("status");
+            const resetButton = document.getElementById("resetButton");
+
+            if (!videoUrl) {
+                alert("Please enter a valid video URL.");
+                return;
+            }
+
+            statusDiv.innerText = "Processing started...";
+            resetButton.classList.add("hidden");
+
+            fetch('/process', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ video_url: videoUrl })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.upload_id) {
+                    window.location.href = "/processing";
+                } else {
+                    statusDiv.innerText = "Error: " + (data.error || "Unknown error");
+                    resetButton.classList.remove("hidden");
+                }
+            })
+            .catch(error => {
+                statusDiv.innerText = "Request failed.";
+                resetButton.classList.remove("hidden");
+            });
+        }
+
+        function submitSample(sampleUrl) {
+            document.getElementById("video_url").value = sampleUrl;
+            sendVideo();
+        }
+
+        function resetProcessing() {
+            fetch("/reset", { method: "POST" })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                window.location.reload();
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Lecture Video Processor</title>
     <style>
         .container { max-width: 800px; margin: 50px auto; text-align: center; }
         .chatbox { border: 2px solid #ccc; padding: 20px; border-radius: 10px; background: #f9f9f9; display: flex; align-items: center; }
@@ -9,6 +208,7 @@
         button { background: #007bff; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; margin-left: 10px; }
         button:hover { background: #0056b3; }
         #status { margin-top: 20px; font-weight: bold; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
@@ -19,28 +219,22 @@
             <button onclick="sendVideo()">➤</button>
         </div>
         <div id="status"></div>
+        <button id="resetButton" class="hidden" onclick="resetProcessing()">Generate Other Video</button>
     </div>
 
     <script>
-        function checkProcessing(uploadId) {
-            const interval = setInterval(() => {
-                fetch('/check_status')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'complete') {
-                        clearInterval(interval);
-                        window.location.href = "/result"; // Redirect to result page
-                    }
-                });
-            }, 10000);
-        }
-
         function sendVideo() {
             const videoUrl = document.getElementById("video_url").value;
+            const statusDiv = document.getElementById("status");
+            const resetButton = document.getElementById("resetButton");
+
             if (!videoUrl) {
                 alert("Please enter a valid video URL.");
                 return;
             }
+
+            statusDiv.innerText = "Processing started...";
+            resetButton.classList.add("hidden");
 
             fetch('/process', {
                 method: 'POST',
@@ -50,16 +244,130 @@
             .then(response => response.json())
             .then(data => {
                 if (data.upload_id) {
-                    document.getElementById("status").innerText = "Processing started...";
-                    checkProcessing(data.upload_id);
+                    window.location.href = "/processing";
                 } else {
-                    document.getElementById("status").innerText = "Error: " + data.error;
+                    statusDiv.innerText = "Error: " + (data.error || "Unknown error");
+                    resetButton.classList.remove("hidden");
                 }
             })
             .catch(error => {
-                document.getElementById("status").innerText = "Request failed.";
+                statusDiv.innerText = "Request failed.";
+                resetButton.classList.remove("hidden");
             });
+        }
+
+        function resetProcessing() {
+            fetch("/reset", { method: "POST" })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                window.location.reload();
+            })
+            .catch(error => console.error("Error:", error));
         }
     </script>
 </body>
-</html>
+</html> -->
+
+
+
+
+<!-- Codee 2 -->
+
+
+<!-- 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lecture Video Processor</title>
+    <style>
+        .container { max-width: 800px; margin: 50px auto; text-align: center; }
+        .chatbox { border: 2px solid #ccc; padding: 20px; border-radius: 10px; background: #f9f9f9; display: flex; align-items: center; }
+        input[type="url"] { flex-grow: 1; padding: 10px; border: none; border-radius: 5px; outline: none; }
+        button { background: #007bff; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; margin-left: 10px; }
+        button:hover { background: #0056b3; }
+        #status { margin-top: 20px; font-weight: bold; }
+        .hidden { display: none; }
+        .sample-links { margin-top: 30px; }
+        .sample-links button {
+            background-color: #6c757d;
+            margin: 5px;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .sample-links button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lecture Video Processor</h1>
+        <div class="chatbox">
+            <input type="url" id="video_url" placeholder="Enter video URL..." required>
+            <button onclick="sendVideo()">➤</button>
+        </div>
+
+        <div class="sample-links">
+            <p>Try with sample videos:</p>
+            <button onclick="submitSample('https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4')">Sample 1</button>
+            <button onclick="submitSample('https://sample-videos.com/video123/mp4/720/sample-mp4-file.mp4')">Sample 2</button>
+            <button onclick="submitSample('https://filesamples.com/samples/video/mp4/sample_640x360.mp4')">Sample 3</button>
+        </div>
+
+        <div id="status"></div>
+        <button id="resetButton" class="hidden" onclick="resetProcessing()">Generate Other Video</button>
+    </div>
+
+    <script>
+        function sendVideo() {
+            const videoUrl = document.getElementById("video_url").value;
+            const statusDiv = document.getElementById("status");
+            const resetButton = document.getElementById("resetButton");
+
+            if (!videoUrl) {
+                alert("Please enter a valid video URL.");
+                return;
+            }
+
+            statusDiv.innerText = "Processing started...";
+            resetButton.classList.add("hidden");
+
+            fetch('/process', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ video_url: videoUrl })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.upload_id) {
+                    window.location.href = "/processing";
+                } else {
+                    statusDiv.innerText = "Error: " + (data.error || "Unknown error");
+                    resetButton.classList.remove("hidden");
+                }
+            })
+            .catch(error => {
+                statusDiv.innerText = "Request failed.";
+                resetButton.classList.remove("hidden");
+            });
+        }
+
+        function submitSample(sampleUrl) {
+            document.getElementById("video_url").value = sampleUrl;
+            sendVideo();
+        }
+
+        function resetProcessing() {
+            fetch("/reset", { method: "POST" })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                window.location.reload();
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html> -->

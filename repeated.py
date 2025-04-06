@@ -1,7 +1,7 @@
 import google.generativeai as genai
 
 # Configure Gemini API (Make sure to set up authentication)
-genai.configure(api_key="AIzaSyDNQ3uLiUTQVljD8Cj5vAAB1HLnk2FQnU4")  # Replace with your actual API key
+genai.configure(api_key="AIzaSyDF1XCJo8Ko6RP6TNgxDGJSDYuydAqw9Ow")  # Replace with your actual API key
 
 def generate_gemini_prompt(prev_content, new_content):
     """Formats the prompt for Gemini to filter out repeated content."""
@@ -33,7 +33,7 @@ def filter_content_with_gemini(prev_chunk, new_chunk):
     response = model.generate_content(prompt_text)
     
     if response and response.text:
-        return response.text.strip()
+        return response.text    
     else:
         print("Error: No response from Gemini.")
         return new_chunk  # Return new chunk unchanged if Gemini fails
