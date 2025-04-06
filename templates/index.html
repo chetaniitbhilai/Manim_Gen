@@ -24,6 +24,23 @@
             gap: 15px;
         }
 
+        .sample-links .sample-link {
+            display: inline-block;
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            margin: 10px;
+            border-radius: 6px;
+            font-size: 18px;
+            transition: background-color 0.2s;
+        }
+
+        .sample-links .sample-link:hover {
+            background-color: #5a6268;
+        }
+
+
         input[type="url"] {
             flex-grow: 1;
             padding: 16px;
@@ -109,31 +126,32 @@
 
         <div class="sample-links">
             <p>Try with sample videos:</p>
-            <button onclick="submitSample('/static/videos/sample1.mp4')">Sample 1</button>
-            <button onclick="submitSample('/static/videos/sample2.mp4')">Sample 2</button>
-            <button onclick="submitSample('/static/videos/sample3.mp4')">Sample 3</button>
+            <a href="#" onclick="submitSample('https://youtu.be/VVYLpmKRfQ8?si=B9jauzEU5_qQ-Lop')" class="sample-link">Sample 1</a>
+            <a href="#" onclick="submitSample('https://youtu.be/fjDh4WPTGq4?si=pfPH3yRuznvRnawt')" class="sample-link">Sample 2</a>
+            <a href="#" onclick="submitSample('https://youtu.be/0apMXhWG_W8?si=Xgik9_CitwjXj7cG')" class="sample-link">Sample 3</a>
         </div>
+        
 
         <!-- Local Video Previews -->
         <div class="sample-videos">
             <div class="sample-video-wrapper">
                 <div class="sample-caption">Sample 1 Preview</div>
                 <video controls>
-                    <source src="../samples/sample1.mp4" type="video/mp4">
+                    <source src="static/samples/sample1.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
             <div class="sample-video-wrapper">
                 <div class="sample-caption">Sample 2 Preview</div>
                 <video controls>
-                    <source src="/static/videos/sample2.mp4" type="video/mp4">
+                    <source src="/static/samples/sample2.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
             <div class="sample-video-wrapper">
                 <div class="sample-caption">Sample 3 Preview</div>
                 <video controls>
-                    <source src="/static/videos/sample3.mp4" type="video/mp4">
+                    <source src="/static/samples/sample3.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
@@ -194,7 +212,6 @@
     </script>
 </body>
 </html>
-
 
 
 <!-- <!DOCTYPE html>
